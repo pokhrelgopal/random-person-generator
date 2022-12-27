@@ -13,8 +13,8 @@ const defaultImage = "https://randomuser.me/api/portraits/men/75.jpg";
 function App() {
   const [loading, setLoading] = useState(true);
   const [person, setPerson] = useState(null);
-  const [title, setTitle] = useState("name");
   const [value, setValue] = useState("random person");
+  const [title, setTitle] = useState("name");
 
   const getPerson = async () => {
     const response = await fetch(url);
@@ -22,10 +22,8 @@ function App() {
     const person = data.results[0];
     const { phone, email } = person;
     const { large: image } = person.picture;
-    const {
-      login: { password },
-    } = person;
     const { first, last } = person.name;
+    const { password } = person.login;
     const {
       dob: { age },
     } = person;
@@ -51,7 +49,12 @@ function App() {
     getPerson();
   }, []);
   const handleValue = (e) => {
-    //
+    if (e.target.classList.contains("icon")) {
+      console.log("hello");
+      const newValue = e.target.dataset.label;
+      setTitle(newValue);
+      setValue(person[newValue]);
+    }
   };
 
   return (
@@ -69,48 +72,42 @@ function App() {
             <p className="text-sm">My {title} is</p>
             <p className="text-lg font-semibold capitalize">{value}</p>
           </div>
-          <div className="icons pt-8 flex items-center justify-evenly">
+          <div className="values-list pt-8 flex items-center justify-evenly">
             <button
-              className="text-violet-700 text-xl md:text-2xl"
-              data-label="name"
+              className="icon text-violet-700 text-xl md:text-2xl"
               onMouseOver={handleValue}
             >
-              <FaUser />
+              <FaUser className="icon" data-label="name" />
             </button>
             <button
-              className="text-violet-700 text-xl md:text-2xl"
-              data-label="email"
+              className="icon text-violet-700 text-xl md:text-2xl"
               onMouseOver={handleValue}
             >
-              <FaEnvelopeOpen />
+              <FaEnvelopeOpen className="icon" data-label="email" />
             </button>
             <button
-              className="text-violet-700 text-xl md:text-2xl"
-              data-label="age"
+              className="icon text-violet-700 text-xl md:text-2xl"
               onMouseOver={handleValue}
             >
-              <FaCalendarTimes />
+              <FaCalendarTimes className="icon" data-label="age" />
             </button>
             <button
-              className="text-violet-700 text-xl md:text-2xl"
-              data-label="street"
+              className="icon text-violet-700 text-xl md:text-2xl"
               onMouseOver={handleValue}
             >
-              <FaMap />
+              <FaMap className="icon" data-label="street" />
             </button>
             <button
-              className="text-violet-700 text-xl md:text-2xl"
-              data-label="phone"
+              className="icon text-violet-700 text-xl md:text-2xl"
               onMouseOver={handleValue}
             >
-              <FaPhone />
+              <FaPhone className="icon" data-label="phone" />
             </button>
             <button
-              className="text-violet-700 text-xl md:text-2xl"
-              data-label="password"
+              className="icon text-violet-700 text-xl md:text-2xl"
               onMouseOver={handleValue}
             >
-              <FaLock />
+              <FaLock className="icon" data-label="password" />
             </button>
           </div>
           <div className="button pt-8 flex items-center justify-center">
